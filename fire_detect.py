@@ -3,10 +3,10 @@ import numpy as np
 from ultralytics import YOLO
 from picamera2 import Picamera2
 
-# Load YOLO model
+# Load my custome YOLO model
 model = YOLO("fire_detector_v1.pt")
 
-# Initialize Pi Camera 2
+# Initialize Pi Camera 2 i dont think this will work
 picam2 = Picamera2()
 camera_config = picam2.create_preview_configuration(main={"format": "XRGB8888", "size": (1280, 720)})
 picam2.configure(camera_config)
@@ -15,17 +15,17 @@ picam2.start()
 # HSV Color Range for Fire Detection
 lower_fire = np.array([0, 100, 150])
 upper_fire = np.array([30, 255, 255])
-
+#without resize the window gets too much small  
 cv2.namedWindow("🔥 Fire Detection", cv2.WINDOW_NORMAL)
 cv2.resizeWindow("🔥 Fire Detection", 1280, 720)
 
 print("Press 'q' to quit")
 
 while True:
-    # Capture frame from Pi Camera
+    # Capture frame from Pi Camera as i see in the documentation 
     frame = picam2.capture_array()
 
-    # YOLO Detection
+    # YOLO Detection 
     results = model(frame, verbose=False)
     annotated_frame = results[0].plot()
 
@@ -51,7 +51,7 @@ while True:
     # Check YOLO detections
     yolo_fire_detected = len(results[0].boxes) > 0 if results[0].boxes is not None else False
 
-    # Display status
+    # Display status this will do the detection animation in the display 
     if color_fire_detected or yolo_fire_detected:
         cv2.circle(annotated_frame, (30, 30), 20, (0, 0, 255), -1)
         cv2.putText(annotated_frame, 'FIRE DETECTED!', (70, 45),
@@ -67,11 +67,11 @@ while True:
         cv2.putText(annotated_frame, 'NO FIRE', (70, 45),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
-    # Show window
+    # Show window this is the window which will seen by the user 
     cv2.imshow("🔥 Fire Detection", annotated_frame)
 
-    # Break on 'q'
+    # Break on 'q' or stop the program wiht q
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-cv2.destroyAllWindows()
+cv2.destroyAllWindows() #finally exit the program 
