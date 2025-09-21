@@ -19,8 +19,8 @@ lower_fire = np.array([0, 100, 150])
 upper_fire = np.array([30, 255, 255])
 
 # Window setup so the window should be atleast visible 
-cv2.namedWindow("🔥 Fire Detection", cv2.WINDOW_NORMAL)
-cv2.resizeWindow("🔥 Fire Detection", 1280, 720)
+cv2.namedWindow(" Fire Detection", cv2.WINDOW_NORMAL)
+cv2.resizeWindow(" Fire Detection", 1280, 720)
 
 print("Press 'q' to quit")
 
@@ -61,19 +61,19 @@ while True:
         cv2.circle(annotated_frame, (30, 30), 20, (0, 0, 255), -1)
         cv2.putText(annotated_frame, 'FIRE DETECTED!', (70, 45),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
-        cv2.putText(annotated_frame, '⚠️ FIRE ALERT ⚠️', (400, 50),
+        cv2.putText(annotated_frame, ' FIRE ALERT ', (400, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 4)
         if color_fire_detected:
-            print("🔥 Color fire detected at location!")
+            print(" Color fire detected at location!")
         if yolo_fire_detected:
-            print("🔥 YOLO fire detected!")
+            print(" YOLO fire detected!")
     else:
         cv2.circle(annotated_frame, (30, 30), 20, (0, 255, 0), -1)
         cv2.putText(annotated_frame, 'NO FIRE', (70, 45),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
     # Show window
-    cv2.imshow("🔥 Fire Detection", annotated_frame)
+    cv2.imshow(" Fire Detection", annotated_frame)
 
     # Quit on 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
