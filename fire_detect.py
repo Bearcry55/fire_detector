@@ -31,7 +31,7 @@ while True:
     frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
 
     # YOLO Detection
-    results = model(frame, verbose=False)
+    results = model.predict(frame, verbose=False, imgsz=320)
     annotated_frame = results[0].plot()
 
     # Color-based Detection
